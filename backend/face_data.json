@@ -1,18 +1,18 @@
 [
   {
     "index": 1,
-    "gender": "female",
-    "age": "23.1",
-    "expression": "neutral",
+    "gender": "male",
+    "age": "50.4",
+    "expression": "happy",
     "confidence": {
-      "gender": "98.7",
-      "expression": "100.0"
+      "gender": "98.1",
+      "expression": "99.9"
     },
     "box": {
-      "x": 349.16573140158584,
-      "y": 276.84881615638733,
-      "width": 434.08809572394716,
-      "height": 538.7016951441765
+      "x": 248.4792160987854,
+      "y": 86.14775709434063,
+      "width": 153.25210809707642,
+      "height": 206.18371036699955
     }
   }
 ]

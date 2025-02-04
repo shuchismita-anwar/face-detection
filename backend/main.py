@@ -18,7 +18,7 @@ sns.set_style('darkgrid')
 
 
 # Load dataset containing image paths and labels
-df=pd.read_csv("D:\\face-rec\\backend\\dataset\\Dataset.csv")
+df=pd.read_csv("./dataset/Dataset.csv")
 # df
 
 # Display the distribution of labels in the dataset
@@ -27,7 +27,7 @@ df=pd.read_csv("D:\\face-rec\\backend\\dataset\\Dataset.csv")
 # Function to encode images and extract facial features
 
 def encode_images(df):
-    dir = r'D:\\face-rec\\backend\\dataset\\Original Images\\Original Images'
+    dir = r'./dataset/Original Images/Original Images'
     face_encodings_list = []
     labels_list = []
     for path, label in df.values:
