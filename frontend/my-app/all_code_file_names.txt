@@ -1,0 +1,15 @@
+all_code_file_names.txt
+components.json
+next-env.d.ts
+next.config.ts
+tailwind.config.ts
+tsconfig.json
+app\globals.css
+app\layout.tsx
+app\page.tsx
+components\ui\button.tsx
+components\ui\card.tsx
+components\ui\dialog.tsx
+components\ui\scroll-area.tsx
+components\ui\textarea.tsx
+lib\utils.ts

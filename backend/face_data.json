@@ -1,0 +1,18 @@
+[
+  {
+    "index": 1,
+    "gender": "female",
+    "age": "23.1",
+    "expression": "neutral",
+    "confidence": {
+      "gender": "98.7",
+      "expression": "100.0"
+    },
+    "box": {
+      "x": 349.16573140158584,
+      "y": 276.84881615638733,
+      "width": 434.08809572394716,
+      "height": 538.7016951441765
+    }
+  }
+]
