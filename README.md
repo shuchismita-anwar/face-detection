@@ -216,6 +216,26 @@ The application supports two ways to add images for face recognition:
      }
    };
    ```
+3. **People Classes in the Model**
+   The current version recognizes these 31 individuals:
+   ```
+   1. Akshay Kumar         | 2. Alexandra Daddario  
+   3. Alia Bhatt           | 4. Amitabh Bachchan  
+   5. Andy Samberg         | 6. Anushka Sharma  
+   7. Billie Eilish        | 8. Brad Pitt  
+   9. Camila Cabello       | 10. Charlize Theron  
+   11. Claire Holt         | 12. Courtney Cox  
+   13. Dwayne Johnson      | 14. Elizabeth Olsen  
+   15. Ellen Degeneres     | 16. Henry Cavill  
+   17. Hrithik Roshan      | 18. Hugh Jackman  
+   19. Jessica Alba        | 20. Kashyap  
+   21. Lisa Kudrow         | 22. Margot Robbie  
+   23. Marmik              | 24. Natalie Portman  
+   25. Priyanka Chopra     | 26. Robert Downey Jr  
+   27. Roger Federer       | 28. Tom Cruise  
+   29. Vijay Deverakonda   | 30. Virat Kohli  
+   31. Zac Efron
+   ```
 
 ## 🏃‍♂️ Running the Application
 
@@ -262,41 +282,28 @@ face-rec/
 
 ## 🛠️ Technology Stack
 
-### Frontend
-- Next.js 13.5.6
-- React 18.2.0
-- React DOM 18.2.0
-- Three.js 0.158.0
-- @react-three/fiber 8.15.11
-- @react-three/drei 9.88.7
-- TypeScript 5.2.2
-- Tailwind CSS 3.3.5
-- Shadcn UI (latest)
-- React Dropzone 14.2.3
-- Lucide React 0.292.0
-- Axios 1.6.2
-- Classnames 2.3.2
-- React Icons 4.12.0
-
-### Backend
-- Node.js 16.20.0+
-- Express 4.18.2
-- Python 3.8+
-- TensorFlow.js 4.13.0
-- face-api.js 0.22.2
-- OpenCV Python (cv2) 4.8.1
-- scikit-learn 1.3.2
-- NumPy 1.24.3
-- Pandas 2.1.3
-- Matplotlib 3.8.2
-- face_recognition 1.3.0
-- Multer 1.4.5-lts.1
-- CORS 2.8.5
-- dotenv 16.3.1
-- body-parser 1.20.2
-- morgan 1.10.0
+   ```
+   ### Frontend                            | ### Backend
+   - Next.js 13.5.6                        | - Node.js 16.20.0+
+   - React 18.2.0                          | - Express 4.18.2
+   - React DOM 18.2.0                      | - Python 3.8+
+   - Three.js 0.158.0                      | - TensorFlow.js 4.13.0
+   - @react-three/fiber 8.15.11            | - face-api.js 0.22.2
+   - @react-three/drei 9.88.7              | - OpenCV Python (cv2) 4.8.1
+   - TypeScript 5.2.2                      | - scikit-learn 1.3.2
+   - Tailwind CSS 3.3.5                    | - NumPy 1.24.3
+   - Shadcn UI (latest)                    | - Pandas 2.1.3
+   - React Dropzone 14.2.3                 | - Matplotlib 3.8.2
+   - Lucide React 0.292.0                  | - face_recognition 1.3.0
+   - Axios 1.6.2                           | - Multer 1.4.5-lts.1
+   - Classnames 2.3.2                      | - CORS 2.8.5
+   - React Icons 4.12.0                    | - dotenv 16.3.1
+                                           | - body-parser 1.20.2
+                                           | - morgan 1.10.0
+   ```
 
 ### Development Tools
+
 - CMake 3.27.7
 - Visual Studio Build Tools 2022
 - npm 10.2.3
