@@ -68,61 +68,14 @@ This view highlights detected faces in an image with bounding boxes and names of
 
 ---
 
-### 5. **Processed Image with Face Data**
+### 8. **Processed Image with Face Data**
 For each detected face, detailed analysis such as gender, age, and expression is provided alongside the image.
 ![Recognized Image](https://github.com/shuchismita-anwar/face-detection/blob/final-branch/images/image8.png)
 
 
+## 🔄 Concurrency & Secure File Handling Improvements
 
-## 📋 Prerequisites
-
-- Node.js 16.20.0+
-- Python 3.8+
-- CMake 3.27.7
-
-
-## 🛠️ Technology Stack
-
-### Frontend
-- Next.js 13.5.6
-- React 18.2.0
-- React DOM 18.2.0
-- Three.js 0.158.0
-- @react-three/fiber 8.15.11
-- @react-three/drei 9.88.7
-- TypeScript 5.2.2
-- Tailwind CSS 3.3.5
-- Shadcn UI (latest)
-- React Dropzone 14.2.3
-- Lucide React 0.292.0
-- Axios 1.6.2
-- Classnames 2.3.2
-- React Icons 4.12.0
-
-### Backend
-- Node.js 16.20.0+
-- Express 4.18.2
-- Python 3.8+
-- TensorFlow.js 4.13.0
-- face-api.js 0.22.2
-- OpenCV Python (cv2) 4.8.1
-- scikit-learn 1.3.2
-- NumPy 1.24.3
-- Pandas 2.1.3
-- Matplotlib 3.8.2
-- face_recognition 1.3.0
-- Multer 1.4.5-lts.1
-- CORS 2.8.5
-- dotenv 16.3.1
-- body-parser 1.20.2
-- morgan 1.10.0
-
-### Development Tools
-- CMake 3.27.7
-- Visual Studio Build Tools 2022
-- npm 10.2.3
-- pip 23.3.1
-
+The application has been significantly enhanced to ensure the secure and efficient handling of concurrent requests. Unique IDs are generated using **crypto**, and **multer** has been modified to use unique filenames for all uploads, ensuring unique file paths for processed images and face data. Temporary files are automatically cleaned up after processing, preventing conflicts between requests. The backend has been made to pass unique IDs to both face-detection.js and main.py. The face-detection.js script accepts face data paths as command-line arguments, uses the provided unique paths for outputs, and includes enhanced error handling. Similarly, main.py has been updated to accept a unique ID parameter, generate unique filenames for outputs, and improve face data handling with robust error handling and reporting. **There is no queue system so it allows images to be processed immediately upon upload.** All images are processed in parallel using separate fetch requests, with individual loading and error states maintained for each image. Results are displayed as soon as processing is completed, making the application faster and more efficient. These improvements ensure that the backend can handle concurrent requests without file conflicts while maintaining accurate face recognition logic and optimal performance.
 
 ## 🚀 Installation
 
@@ -300,3 +253,55 @@ face-rec/
 │       └── public/      # Static assets
 └── README.md
 ```
+
+
+
+## 📋 Prerequisites
+
+- Node.js 16.20.0+
+- Python 3.8+
+- CMake 3.27.7
+
+
+## 🛠️ Technology Stack
+
+### Frontend
+- Next.js 13.5.6
+- React 18.2.0
+- React DOM 18.2.0
+- Three.js 0.158.0
+- @react-three/fiber 8.15.11
+- @react-three/drei 9.88.7
+- TypeScript 5.2.2
+- Tailwind CSS 3.3.5
+- Shadcn UI (latest)
+- React Dropzone 14.2.3
+- Lucide React 0.292.0
+- Axios 1.6.2
+- Classnames 2.3.2
+- React Icons 4.12.0
+
+### Backend
+- Node.js 16.20.0+
+- Express 4.18.2
+- Python 3.8+
+- TensorFlow.js 4.13.0
+- face-api.js 0.22.2
+- OpenCV Python (cv2) 4.8.1
+- scikit-learn 1.3.2
+- NumPy 1.24.3
+- Pandas 2.1.3
+- Matplotlib 3.8.2
+- face_recognition 1.3.0
+- Multer 1.4.5-lts.1
+- CORS 2.8.5
+- dotenv 16.3.1
+- body-parser 1.20.2
+- morgan 1.10.0
+
+### Development Tools
+- CMake 3.27.7
+- Visual Studio Build Tools 2022
+- npm 10.2.3
+- pip 23.3.1
+
