@@ -217,7 +217,7 @@ The application supports two ways to add images for face recognition:
    };
    ```
 3. **People Classes in the Model**
-   The current version recognizes these 31 individuals:
+   - The current version recognizes these 31 individuals:
    ```
    1. Akshay Kumar         | 2. Alexandra Daddario  
    3. Alia Bhatt           | 4. Amitabh Bachchan  
