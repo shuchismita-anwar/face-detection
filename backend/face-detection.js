@@ -8,7 +8,7 @@ faceapi.env.monkeyPatch({ Canvas, Image, ImageData })
 
 const inputImagePath = process.argv[2]
 const outputImagePath = process.argv[3]
-const faceDataPath = path.join(__dirname, "face_data.json")
+const faceDataPath = process.argv[4] // Get face data path from command line arguments
 
 async function loadModels() {
   try {
@@ -24,7 +24,7 @@ async function loadModels() {
   }
 }
 
-async function detectFacesAndDraw(imagePath, outputImagePath) {
+async function detectFacesAndDraw(imagePath, outputImagePath, faceDataPath) {
   try {
     if (!fs.existsSync(imagePath)) {
       throw new Error(`File not found: ${imagePath}`)
@@ -85,7 +85,7 @@ async function detectFacesAndDraw(imagePath, outputImagePath) {
       })
     })
 
-    // Save the face data to a file
+    // Save the face data to the provided path
     fs.writeFileSync(faceDataPath, JSON.stringify(faceData, null, 2))
     console.log(`Face data saved to: ${faceDataPath}`)
 
@@ -100,12 +100,19 @@ async function detectFacesAndDraw(imagePath, outputImagePath) {
     throw error
   }
 }
+
 // Execute the face detection
 ;(async () => {
-  if (!inputImagePath || !outputImagePath) {
-    console.error("Please provide both input and output image paths")
+  if (!inputImagePath || !outputImagePath || !faceDataPath) {
+    console.error("Please provide input image path, output image path, and face data path")
     process.exit(1)
   }
-  await loadModels()
-  await detectFacesAndDraw(inputImagePath, outputImagePath)
+
+  try {
+    await loadModels()
+    await detectFacesAndDraw(inputImagePath, outputImagePath, faceDataPath)
+  } catch (error) {
+    console.error("Error:", error)
+    process.exit(1)
+  }
 })()

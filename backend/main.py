@@ -133,50 +133,97 @@ def iou(boxA, boxB):
 
 
 # Function to predict faces in an image and annotate with recognized labels
-"""
-    Detects and recognizes faces in an input image and saves the output image with annotations.
+def predict_and_retrieve(image_path, output_dir, unique_id):
+    """
+    Predicts faces in an image and saves the annotated image.
     
     Args:
-        image_path (str): Path to the input image.
-        output_dir (str): Directory to save the annotated image.
-"""
-def predict_and_retrieve(image_path, output_dir):
-    image = cv.imread(image_path)
-    rgb_image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
-    face_locations = fc.face_locations(rgb_image)
-    face_encodings = fc.face_encodings(rgb_image, face_locations)
-
-    recognized_faces = []
-    identified_people = set()  # Store recognized names
-
-    for i, (top, right, bottom, left) in enumerate(face_locations):
-        matches = knn_clf.kneighbors([face_encodings[i]], n_neighbors=1)
-        recognized_person = knn_clf.predict([face_encodings[i]])[0] if matches[0][0][0] < 0.5 else "Unknown"
-
-        recognized_faces.append({
-            "bounding_box": [top, right, bottom, left],
-            "name": recognized_person
-        })
-
-        identified_people.add(recognized_person)
-
-        # Draw bounding box & label on image
-        cv.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
-        cv.putText(image, recognized_person, (left, top - 10), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-
-    # Save the updated image with bounding boxes
-    recognized_output_path = os.path.join(output_dir, "recognized_output.jpg")
-    cv.imwrite(recognized_output_path, image)
+        image_path (str): Path to the input image
+        output_dir (str): Directory to save output images
+        unique_id (str): Unique identifier for this request
+    """
+    try:
+        # Load the image using OpenCV first (original working method)
+        image = cv.imread(image_path)
+        rgb_image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+        
+        # Get face locations and encodings using face_recognition
+        face_locations = fc.face_locations(rgb_image)
+        face_encodings = fc.face_encodings(rgb_image, face_locations)
+        
+        # List to store identified faces
+        identified_faces = []
+        
+        # Process each face
+        for i, (top, right, bottom, left) in enumerate(face_locations):
+            if i < len(face_encodings):  # Safety check
+                # Get the closest match using KNN
+                matches = knn_clf.kneighbors([face_encodings[i]], n_neighbors=1)
+                
+                # Use distance threshold to determine if it's a match
+                if matches[0][0][0] < 0.5:  # Distance threshold
+                    recognized_person = knn_clf.predict([face_encodings[i]])[0]
+                else:
+                    recognized_person = "Unknown"
+                
+                # Draw rectangle and name
+                cv.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
+                cv.putText(image, recognized_person, (left, top - 10), 
+                          cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+                
+                # Add to identified faces list
+                identified_faces.append({
+                    "name": recognized_person,
+                    "confidence": float(1 - matches[0][0][0]),  # Convert distance to confidence
+                    "location": {
+                        "top": int(top),
+                        "right": int(right),
+                        "bottom": int(bottom),
+                        "left": int(left)
+                    }
+                })
+        
+        # Save the annotated image with unique filename
+        output_path = os.path.join(output_dir, f"recognized_{unique_id}.jpg")
+        cv.imwrite(output_path, image)
+        
+        # Update face data file with identified faces
+        face_data_path = os.path.join(os.path.dirname(output_dir), f"face_data_{unique_id}.json")
+        if os.path.exists(face_data_path):
+            with open(face_data_path, 'r') as f:
+                face_data = json.load(f)
+        else:
+            face_data = []
+            
+        face_data = {
+            "face_data": face_data,
+            "identified_faces": identified_faces
+        }
+        
+        with open(face_data_path, 'w') as f:
+            json.dump(face_data, f, indent=2)
+            
+        return True
+        
+    except Exception as e:
+        print(f"Error in predict_and_retrieve: {str(e)}")
+        return False
 
 # Example usage:
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python main.py <input_image_path> <output_dir>")
+    if len(sys.argv) < 4:
+        print("Usage: python main.py <input_image_path> <output_dir> <unique_id>")
         sys.exit(1)
-
+        
     input_image_path = sys.argv[1]
-    output_directory = sys.argv[2]
-    identified_folder = predict_and_retrieve(input_image_path, output_directory)
+    output_dir = sys.argv[2]
+    unique_id = sys.argv[3]
+    
+    if predict_and_retrieve(input_image_path, output_dir, unique_id):
+        print("Face recognition completed successfully")
+    else:
+        print("Error in face recognition process")
+        sys.exit(1)
 
 
 # Function to load the trained model later
@@ -185,4 +232,3 @@ def load_trained_model():
         return joblib.load(model_path)
     else:
         raise FileNotFoundError("Trained model not found. Train and save the model first.")
-

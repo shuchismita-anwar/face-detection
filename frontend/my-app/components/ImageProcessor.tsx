@@ -6,17 +6,28 @@ import { ImageUploader } from "./ImageUploader"
 import { ProcessedImages } from "./ProcessedImages"
 import type { FaceData } from "@/types/FaceData"
 
+interface ImageResult {
+  processedImage: string | null;
+  recognizedImage: string | null;
+  faceData: FaceData[] | null;
+  isLoading: boolean;
+  error: string | null;
+}
+
 export default function ImageProcessor() {
   const [images, setImages] = useState<string[]>([])
-  const [processedImage, setProcessedImage] = useState<string | null>(null)
-  const [recognizedImage, setRecognizedImage] = useState<string | null>(null)
-  const [faceData, setFaceData] = useState<FaceData[] | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [imageResults, setImageResults] = useState<Map<string, ImageResult>>(new Map())
 
-  const processImage = async (file: File) => {
-    setIsLoading(true)
-    setError(null)
+  const processImage = async (file: File, imageUrl: string) => {
+    // Update loading state for this specific image
+    setImageResults(prev => new Map(prev).set(imageUrl, {
+      processedImage: null,
+      recognizedImage: null,
+      faceData: null,
+      isLoading: true,
+      error: null
+    }));
+
     const formData = new FormData()
     formData.append("image", file)
 
@@ -31,27 +42,38 @@ export default function ImageProcessor() {
       }
 
       const data = await response.json()
-      console.log("Received data from server:", data) // Debug log
+      console.log("Received data from server:", data)
 
-      setProcessedImage(`http://localhost:3001${data.outputPath}`)
-      setRecognizedImage(`http://localhost:3001${data.recognizedOutputPath}`)
-      setFaceData(data.faceData)
+      // Update results for this specific image
+      setImageResults(prev => new Map(prev).set(imageUrl, {
+        processedImage: `http://localhost:3001${data.outputPath}`,
+        recognizedImage: `http://localhost:3001${data.recognizedOutputPath}`,
+        faceData: data.faceData,
+        isLoading: false,
+        error: null
+      }))
     } catch (error) {
       console.error("Error processing image:", error)
-      setError("Failed to process image. Please try again.")
-    } finally {
-      setIsLoading(false)
+      setImageResults(prev => new Map(prev).set(imageUrl, {
+        processedImage: null,
+        recognizedImage: null,
+        faceData: null,
+        isLoading: false,
+        error: "Failed to process image. Please try again."
+      }))
     }
   }
 
-  const handleFiles = async (files: FileList) => {
+  const handleFiles = (files: FileList) => {
     const imageFiles = Array.from(files).filter((file) => file.type.startsWith("image/"))
-    const newImages = imageFiles.map((file) => URL.createObjectURL(file))
-    setImages((prev) => [...prev, ...newImages])
-
-    if (imageFiles.length > 0) {
-      await processImage(imageFiles[0])
-    }
+    
+    // Process all images concurrently
+    imageFiles.forEach(file => {
+      const imageUrl = URL.createObjectURL(file)
+      setImages(prev => [...prev, imageUrl])
+      // Start processing immediately
+      processImage(file, imageUrl)
+    })
   }
 
   return (
@@ -62,24 +84,10 @@ export default function ImageProcessor() {
 
       <ImageUploader onFilesSelected={handleFiles} />
 
-      {error && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-4 text-red-500 bg-red-100 px-4 py-2 rounded-md"
-        >
-          {error}
-        </motion.div>
-      )}
-
       <ProcessedImages
         images={images}
-        processedImage={processedImage}
-        recognizedImage={recognizedImage}
-        faceData={faceData}
-        isLoading={isLoading}
+        imageResults={imageResults}
       />
     </div>
   )
 }
-
