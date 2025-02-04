@@ -1,25 +1,8 @@
 # Face Recognition and Analysis System
 
-A modern web application that combines advanced face detection, recognition, and analysis capabilities using both JavaScript and Python technologies. The system provides real-time face detection, age and gender estimation, and expression analysis. It also provides bounding boxes around detected faces and uses a trained model to identify the person's name.
+A modern web application that combines advanced face detection, recognition, and analysis capabilities using both JavaScript and Python technologies. The system provides **real-time face detection**, **age and gender estimation**, **facial expression analysis**, **bounding boxes around detected faces**, and uses a **trained model to identify the person's name**. The face recognition model is trained on a comprehensive dataset of labeled face images, ensuring high accuracy in identifying individuals. The training process involves feature extraction using advanced machine learning algorithms and neural networks to learn facial patterns, enabling the model to differentiate between various individuals effectively. It ensures secure and efficient handling of concurrent requests by generating **unique IDs** using `crypto` and modifying **multer** to use unique filenames for uploads, guaranteeing unique file paths for processed images and face data. Temporary files are automatically cleaned up after processing to prevent conflicts. The backend passes unique IDs to both `face-detection.js` and `main.py`. The `face-detection.js` script accepts face data paths as command-line arguments, uses unique paths for outputs, and includes enhanced error handling, while `main.py` accepts unique ID parameters, generates unique filenames for outputs, and improves face data handling with robust error handling and reporting. With no queue system, images are processed immediately upon upload, and all images are handled in parallel using separate fetch requests. Each image maintains its own loading and error states, and results are displayed as soon as processing is complete, making the application faster and more efficient. These enhancements ensure the backend handles concurrent requests without file conflicts while maintaining accurate face recognition logic and optimal performance.
 
-### 🔄 Concurrency & Secure File Handling
 
-The application ensures secure and efficient handling of concurrent requests:
-
-- **Unique IDs** are generated using `crypto`.
-- **Multer** is modified to use unique filenames for all uploads, ensuring unique file paths for processed images and face data.
-- Temporary files are automatically cleaned up after processing, preventing conflicts between requests.
-- The backend passes unique IDs to both `face-detection.js` and `main.py`.
-- The `face-detection.js` script accepts face data paths as command-line arguments, uses the provided unique paths for outputs, and includes enhanced error handling.
-- The `main.py` script accepts a unique ID parameter, generates unique filenames for outputs, and improves face data handling with robust error handling and reporting.
-
-### Key Enhancements:
-- **No queue system**: Images are processed immediately upon upload.
-- **Parallel processing**: All images are processed in parallel using separate fetch requests.
-- Individual loading and error states are maintained for each image.
-- Results are displayed as soon as processing is completed, making the application faster and more efficient.
-
-These improvements ensure that the backend can handle concurrent requests without file conflicts while maintaining accurate face recognition logic and optimal performance.
 ![Face Detection Demo](path_to_demo_image.gif)
 
 ## 🌟 Features
