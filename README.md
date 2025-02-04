@@ -14,6 +14,12 @@ A modern web application that combines advanced face detection, recognition, and
 - Secure file handling and processing
 - RESTful API backend
 - Support for both uploaded images.
+- Secure file handling and processing using cryptography concepts
+- RESTful API backend
+- Support for both uploaded images
+- Handles more than 10 images concurrently
+- Unique file paths and IDs for every processed image
+- Improved error handling and temporary file cleanup
 
 
 
@@ -46,6 +52,25 @@ Each detected face is analyzed for attributes such as gender, age, and expressio
 ### 5. **Recognized Image**
 The recognized image shows the detected face labeled with the person's name (if recognized).
 ![Recognized Image](https://github.com/shuchismita-anwar/face-detection/blob/final-branch/images/image5.png)
+
+---
+
+### 6. **Multiple Image Uploads**
+The system allows users to upload multiple images and processes them concurrently. Each image is displayed with options to view the processed and recognized results.
+![Recognized Image](https://github.com/shuchismita-anwar/face-detection/blob/final-branch/images/image6.png)
+
+
+---
+
+### 7. **Recognized Image with Bounding Boxes**
+This view highlights detected faces in an image with bounding boxes and names of recognized individuals.
+![Recognized Image](https://github.com/shuchismita-anwar/face-detection/blob/final-branch/images/image7.png)
+
+---
+
+### 5. **Processed Image with Face Data**
+For each detected face, detailed analysis such as gender, age, and expression is provided alongside the image.
+![Recognized Image](https://github.com/shuchismita-anwar/face-detection/blob/final-branch/images/image8.png)
 
 
 
