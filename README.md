@@ -242,7 +242,7 @@ The application supports two ways to add images for face recognition:
 1. **Start the Backend Server**
    ```bash
    cd backend
-   npm start
+   node server.js
    ```
 
 2. **Start the Frontend Development Server**
