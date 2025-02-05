@@ -84,6 +84,11 @@ For each detected face, detailed analysis such as gender, age, and expression is
 
 2. **Backend Setup**
    ```bash
+   npm i
+   ```
+   or
+   
+   ```bash
    # Initialize Node.js project
    npm init -y
    
@@ -93,7 +98,7 @@ For each detected face, detailed analysis such as gender, age, and expression is
    npm install axios
    ```
 
-3. **Python Dependencies**
+4. **Python Dependencies**
    Create a Python virtual environment named 'face_recog_env'
    ```bash
    python3.12 -m venv face_recog_env
@@ -102,6 +107,11 @@ For each detected face, detailed analysis such as gender, age, and expression is
    ```
 
 5. **Frontend Setup**
+   ```bash
+   npm i
+   ```
+   or
+   
    ```bash
  
    # Install React and core dependencies
@@ -245,13 +255,14 @@ The application supports two ways to add images for face recognition:
    node server.js
    ```
 
-2. **Start the Frontend Development Server**
+3. **Start the Frontend Development Server**
+
    ```bash
    cd frontend/my-app
    npm run dev
    ```
 
-3. Navigate to `http://localhost:3000`
+4. Navigate to `http://localhost:3000`
 
 ## 📁 Project Structure
 
